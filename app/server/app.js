@@ -9,7 +9,10 @@ var bodyParser = require('body-parser');
 
 var api = require('././routes/api');
 var authenticate = require('././routes/authenticate')(passport);
-
+var mongoose = require('mongoose');
+//connect to mongodb local server
+mongoose.connect("mongodb://localhost:2 7017 /chirp-test");//allows us to perform CRUD operations
+require('././models/models.js');
 var app = express();
 
 // view engine setup
