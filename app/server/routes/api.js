@@ -2,7 +2,18 @@
 
 var express = require('express');  
 var router = express.Router();
-
+router.use(function(req,res,next){
+  if(req.method === "GET"){
+   //continue to next middleware or request handler
+    return next();
+  }
+  if(!req.isAuthenticated()){
+   //user not authenticated , redirect to login page
+    res.redirect('/#login');
+  }
+  //user authenticated continue to next middleware or handler
+  return next();
+});
 router.route('/posts') //making api name as posts that has 2 res get and post
   //return all posts     
   .get(function(req,res){
