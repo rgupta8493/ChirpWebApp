@@ -22,6 +22,7 @@ router.route('/posts/:id')
     //return a particular post
       .get(function(req,res){
     res.send({message:'TODO return post with ID '+ req.params.id});
+  //like get me the post of user having this id
 })
 
  // update existing post
@@ -38,7 +39,7 @@ router.route('/posts/:id')
 });
 
     
-module.exports = router;
+module.exports = router; //expose the router object 
 
 
 //basically gives you all the method that you might need to modify objects for instance post with id is every single point you can perform CRUD on it that what called Fully Restful api
