@@ -11,8 +11,8 @@ var api = require('././routes/api');
 var authenticate = require('././routes/authenticate')(passport);
 var mongoose = require('mongoose');
 //connect to mongodb local server
-mongoose.connect("mongodb://localhost:2 7017 /chirp-test");//allows us to perform CRUD operations
-require('././models/models.js');
+mongoose.connect("mongodb://localhost:27017 /chirp-test");//allows us to perform CRUD operations
+
 var app = express();
 
 // view engine setup
@@ -31,10 +31,13 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(passport.initialize());
 app.use(passport.session());
-
+//intialize models must be before intializing passport
+require('././models/models.js');
 //Intialize passport
 var initPassport = require('./passport-init');
 initPassport(passport);
+
+
 
 app.use('/api', api);
 app.use('/auth', authenticate);
