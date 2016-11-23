@@ -11,6 +11,7 @@ var mongoose = require('mongoose');
 mongoose.connect("mongodb://localhost:27017 /chirp-test"); //allows us to perform CRUD operations
 //intialize models must be before intializing passport
 require('././models/models.js');
+var index = require('././routes/index');
 var api = require('././routes/api');
 var authenticate = require('././routes/authenticate')(passport);
 var app = express();
@@ -31,9 +32,9 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(passport.initialize());
 app.use(passport.session());
-
 //Intialize passport
 var initPassport = require('./passport-init');
+app.use('/', index);
 initPassport(passport);
 app.use('/api', api);
 app.use('/auth', authenticate);
