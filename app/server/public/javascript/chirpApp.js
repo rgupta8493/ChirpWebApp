@@ -25,13 +25,23 @@ app.config(function ($routeProvider) {
       , controller: 'authController'
     });
 });
-app.controller('mainController', function ($scope) {
+app.factory('postService', function ($http) {
+  var factory = {};
+  factory.getAll = function () {
+    return $http.get('/api/posts');
+  }
+  return factory;
+});
+app.controller('mainController', function ($scope, postService) {
   $scope.posts = []; //defining array to carry posts
   $scope.newPost = {
     created_by: ''
     , text: ''
     , created_at: ''
   };
+  postService.getAll().success(function (data) {
+    $scope.posts = data;
+  });
   $scope.post = function () {
     $scope.newPost.created_at = Date.now();
     $scope.posts.push($scope.newPost);
