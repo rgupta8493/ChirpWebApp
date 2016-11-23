@@ -1,6 +1,11 @@
-var app = angular.module('chirpApp', ['ngRoute']).run(function ($rootScope) {
+var app = angular.module('chirpApp', ['ngRoute']).run(function ($rootScope, $http) {
   $rootScope.authenticated = false;
   $rootScope.current_user = "";
+  $rootScope.logout = function () {
+    $http.get('/auth/signout');
+    $rootScope.authenticated = false;
+    $rootScope.current_user = "";
+  };
 });
 app.config(function ($routeProvider) {
   $routeProvider
