@@ -1,4 +1,7 @@
-var app = angular.module('chirpApp', ['ngRoute']);
+var app = angular.module('chirpApp', ['ngRoute']).run(function ($rootScope) {
+  $rootScope.authenticated = false;
+  $rootScope.current_user = "";
+});
 app.config(function ($routeProvider) {
   $routeProvider
   //the timeline display
@@ -34,18 +37,24 @@ app.controller('mainController', function ($scope) {
     };
   };
 });
-app.controller('authController', function ($scope) {
+app.controller('authController', function ($scope, $rootScope, $http, $location) {
   $scope.user = {
     username: ''
     , password: ''
   };
   $scope.error_message = '';
   $scope.login = function () {
-    //placeholder until authentication is implemented
-    $scope.error_message = 'login request for ' + $scope.user.username;
+    $http.post('/auth/login', $scope.user).success(function (data) {
+      $rootScope.authenticated = true;
+      $rootScope.current_user = data.user.username;
+      $location.path('/');
+    })
   };
   $scope.register = function () {
-    //placeholder until authentication is implemented
-    $scope.error_message = 'registeration request for ' + $scope.user.username;
-  };
+    $http.post('/auth/signup', $scope.user).success(function (data) {
+      $rootScope.authenticated = true;
+      $rootScope.current_user = data.user.username;
+      $location.path('/');
+    })
+  }
 });
