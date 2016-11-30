@@ -8,7 +8,7 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 //connect to mongodb local server
-mongoose.connect("mongodb://0.0.0.0:27017/chirp-test"); //allows us to perform CRUD operations
+mongoose.connect("mongodb://localhost:27017/chirp-test"); //allows us to perform CRUD operations
 //intialize models must be before intializing passport
 require('././models/models.js');
 var index = require('././routes/index');
