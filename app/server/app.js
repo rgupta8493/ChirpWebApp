@@ -7,8 +7,13 @@ var session = require('express-session');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
-//connect to mongodb local server
-mongoose.connect("mongodb://localhost:27017/chirp-test"); //allows us to perform CRUD operations
+if (process.env.DEV_ENV) {
+  //connect to mongodb local server
+  mongoose.connect("mongodb://localhost:27017/chirp-test"); //allows us to perform CRUD operations locally
+}
+else {
+  mongoose.connect("mongodb://chirp-test:chirp-test@ds115798.mlab.com:15798/chirp-test"); //on mongolab server
+}
 //intialize models must be before intializing passport
 require('././models/models.js');
 var index = require('././routes/index');
